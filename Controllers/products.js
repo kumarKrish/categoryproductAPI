@@ -4,8 +4,8 @@ module.exports = {
 
   index: (req,res,next) => {
     // get all the products
-
-    Product.find()
+    const id = req.params["categoryId"];
+    Product.find({"category.id":parseInt(id)})
     .exec()
     .then(docs => {
       console.log(docs);
@@ -18,20 +18,5 @@ module.exports = {
       })
     })
 
-  },
-
-deleteProduct: (req,res,next) => {
-    const id = req.params.productId;
-    Product.remove({_id:id})
-    .exec()
-    .then(result => {
-      res.status(200).json(result);
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json({
-        error:err
-      });
-    });
   }
 };
